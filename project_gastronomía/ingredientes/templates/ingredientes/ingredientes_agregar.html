@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Ingredientes</title>
+	<link rel="stylesheet" href="{% static 'css/normalize.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/sweetalert2.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/material.min.css'%}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/material-design-iconic-font.min.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.css' %} " type="text/css">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+	<script  src="{% static 'js/material.min.js' %}"></script>
+	<script  src="{% static 'js/sweetalert2.min.js' %}"></script>
+	<script  src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}" ></script>
+	<script  src="{% static 'js/main.js' %}" ></script>
+</head>
+<body>
+	<!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> Opciones 
+			</div>
+			<figure class="full-width navLateral-body-tittle-menu">
+				<div>
+					<img src="{% static 'img copy/logo.png' %}" alt="Avatar" class="img-responsive">
+				</div>
+				<figcaption>
+					<span>
+						SAZÓN ARTE<br>
+					</span>
+				</figcaption>
+			</figure>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="{% url 'productos:producto_views'%}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr">
+								Inicio
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="{% url 'ingredientes:ingredientes_agregar'%}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-washing-machine"></i>
+							</div>
+							<div class="navLateral-body-cr">
+								Ingredientes
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="{% url 'inventario:inventario_list'%}" class="full-width">
+							<div class="navLateral-body-cl">
+								<img src="{% static 'imagenes/inv.png' %}"></img>
+							</div>
+							<div class="navLateral-body-cr">
+								Inventario
+							</div>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<!-- navBar -->
+		    <!-- Topbar Start -->
+			<div class="content-container">
+				<div class="row align-items-center py-3 px-xl-5">
+					<div class="col-lg-3 d-none d-lg-block">
+						<a href="" class="text-decoration-none">
+							<h2 class="m-0 display-5 font-weight-semi-bold">
+								<span class="text-primary font-weight-bold border px-3 mr-1" style="display: inline-block; vertical-align: middle;">
+									<img src='{% static "img copy/logo.png" %}' width="60px" href="{% url 'productos:producto_views' %}" height="60px" style="vertical-align: middle;"/>
+								</span>SAZÓNARTE
+							</h2>                                       
+						</a>
+					</div>
+					<div class="col-lg-6 col-6 text-left">
+					</div>
+					<div class="col-lg-3 col-6 text-right">
+						<a href="{% url 'usuarios:usuarios_list' user.pk %}" class="btn border">
+							<i class="fas fa-user text-primary"></i>
+							<span class="badge">Perfil</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- Topbar End -->
+			<div class="mdl-tabs__panel is-active" id="tabNewProduct">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--12-col">
+						<div class="full-width panel mdl-shadow--2dp">
+							<div class="full-width panel-tittle bg-primary text-center tittles">
+								Nuevo Producto
+							</div>
+							<div class="full-width panel-content">
+								<form method="post" action="{% if ingrediente.id %}{% url 'ingredientes:ingredientes_update' ingrediente.id %}{% else %}{% url 'ingredientes:ingredientes_agregar' %}{% endif %}">
+									{% csrf_token %}
+                                    <div class="mdl-gr id">
+										<div class="mdl-cell mdl-cell--12-col">
+									        <legend class="text-condensedLight"><i class="zmdi zmdi-border-color"></i> &nbsp; Información del Producto</legend><br>
+									    </div>
+										<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text" pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NombreIngrediente" name="nombreIngrediente">{{ingrediente.nombreIngrediente}}
+												<label class="mdl-textfield__label" for="nombreIngrediente">Nombre</label>
+												<span class="mdl-textfield__error">Nombre Invalido</span>
+											</div>
+										</div>
+										<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text" pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="Descripcion" name="descripcion">{{ingrediente.descripcion}}
+												<label class="mdl-textfield__label" for="descripcion">Descripcion</label>
+											</div>
+										</div>
+										
+										<div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text" pattern="-?[0-9.]*(\.[0-9]+)?" id="Precio" name="precio">{{ingrediente.precio}}
+												<label class="mdl-textfield__label" for="Precio">Precio</label>
+												<span class="mdl-textfield__error">Precio Invalido</span>
+											</div>
+										</div>
+										<div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
+											<div class="mdl-textfield mdl-js-textfield">
+                                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="Disponibilidad">
+                                                    <input type="checkbox" id="Disponibilidad" class="mdl-checkbox__input" name="disponibilidad" {% if ingrediente.disponibilidad %}checked{% endif %}>
+                                                    <span class="mdl-checkbox__label">Disponible</span>
+                                                </label>
+                                            </div>
+										</div>
+										<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="text"  id="Vendedor" name="vendedor">{{ingrediente.vendedor}}
+												<label class="mdl-textfield__label" for="Vendedor">Vendedor</label>
+											</div>
+										</div>
+									    <p class="text-center">
+										    <button type="submit" mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addProduct">
+											    
+										    </button>
+										<div class="mdl-tooltip" for="btn-addProduct">Agregar Producto</div>
+									    </p>
+                                    </div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

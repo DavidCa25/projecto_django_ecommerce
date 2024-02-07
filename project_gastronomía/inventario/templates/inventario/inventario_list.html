@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Inventario</title>
+
+	<!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/normalize.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/sweetalert2.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/material.min.css'%}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/material-design-iconic-font.min.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.css' %} " type="text/css">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+	<!-- Customized Bootstrap Stylesheet -->
+    
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+	<script  src="{% static 'js/material.min.js' %}"></script>
+	<script  src="{% static 'js/sweetalert2.min.js' %}"></script>
+	<script  src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}" ></script>
+	<script  src="{% static 'js/main.js' %}" ></script>
+</head>
+<body>
+	
+	<!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> Opciones 
+			</div>
+			<figure class="full-width navLateral-body-tittle-menu">
+				<div>
+					<img src="{% static 'assets/img/logo.png' %}" alt="Avatar" class="img-responsive">
+				</div>
+				<figcaption>
+					<span class="text-primary font-weight-bold border px-3 mr-1" style="display: inline-block; vertical-align: middle;">
+						SAZÓNARTE<br>
+					</span>
+				</figcaption>
+			</figure>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="{% url 'productos:producto_views'%}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr nav-item" style="display: inline-block; vertical-align: middle; color: blanchedalmond;">
+								Inicio
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="{% url 'ingredientes:ingredientes_agregar'%}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-washing-machine"></i>
+							</div>
+							<div class="navLateral-body-cr">
+								Ingredientes
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="{% url 'inventario:inventario_list'%}" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-shopping-cart"></i>
+							</div>
+							<div class="navLateral-body-cr">
+								Inventario
+							</div>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<div class="full-width divider-menu-h"></div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+							
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--1dp table-responsive">	
+							<div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0" style="max-height: 200px; overflow-y: auto;"></div>
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">Nombre</th>
+									<th class="mdl-data-table__cell--non-numeric">Cantidad Disponible</th>
+									<th class="mdl-data-table__cell--non-numeric">Precio</th>
+								</tr>
+							</thead>			
+							
+							<tbody>			
+								
+							{% for inventario in inventario_list %}			
+							<tr>						
+								<td class="mdl-data-table__cell--non-numeric" id="nombreIngredienteInv" name="nombreIngredienteInv">
+									{% if inventario.nombreIngredienteInv %}
+										{{ inventario.nombreIngredienteInv.nombreIngrediente }}
+									{% else %}
+										No hay información disponible
+									{% endif %}
+							</td>
+							<td>
+								<form method="post" action="{% url 'inventario:inventario_update' inventario.pk %}">
+									{% csrf_token %}
+									<div style="display: flex; align-items: center;">
+										<input type="number" name="cantidad" value="{{ inventario.cantidad }}" style="padding: 5px; margin-right: 5px; flex: 1;">
+										<button type="submit" style="padding: 5px; background-color: #000000; color: white; border: none; border-radius: 3px; cursor: pointer;">Actualizar</button>
+									</div>
+								</form>
+							</td>
+								<td name="precio" id="Precio">
+									{% if inventario.nombreIngredienteInv %}
+										{{ inventario.nombreIngredienteInv.precio }}
+									{% else %}
+										No hay información disponible
+									{% endif %}
+								</td>							
+							</tr>	
+								{% endfor %}	
+													
+							</tbody>	
+						</div>		
+						</table>							
+						{% if not inventario_list %}
+						<p>No hay ingredientes disponibles</p>
+						{% endif %}		
+							
+				</div>				
+			</div>
+		</section>
+	</body>
+</html>
